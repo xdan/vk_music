@@ -8,17 +8,16 @@
 	};
 	window.addEventListener('keydown',eventOnKeyPress);
 	window.addEventListener('keyup',eventOnKeyPress);
-	var list = document.getElementsByClassName('audio'),counter = 0,
-		setInterval(function(){
+	var list = document.getElementsByClassName('audio'),counter = 0;
+	setInterval(function(){
 		if( counter ){
 			var bar = parseFloat(document.getElementById('ac_pr_line').style.width);
 			if( bar>=99 ){
 				var id = orderSlot[0];
-				var event = document.createEvent('Event');
+				var event = document.createEvent('Event'), 
+					elm = document.getElementById(id.replace('audio','play'));
 				event.initEvent('click', true, true);
-				document
-					.getElementById(id.replace('audio','play'))
-						.dispatchEvent(event);
+				elm.dispatchEvent(event);
 				clearSlot(id);
 				recalcSlots();
 			}
