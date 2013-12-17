@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name xdsoft_vk_music
+// @name XDSoft VKontakte
 // @description Script dlya uporyadochennogo proslushivaniya muziki http://xdan.ru/vk.html
 // @author Valeriy Chupurnov
 // @license MIT
