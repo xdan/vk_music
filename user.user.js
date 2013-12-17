@@ -3,7 +3,7 @@
 // @description Script dlya uporyadochennogo proslushivaniya muziki http://xdan.ru/vk.html
 // @author Valeriy Chupurnov
 // @license MIT
-// @version 1.0
+// @version 1.1
 // @include http://vk.com/audio*
 // @include https://vk.com/audio*
 // ==/UserScript==
@@ -17,6 +17,19 @@
 	};
 	window.addEventListener('keydown',eventOnKeyPress);
 	window.addEventListener('keyup',eventOnKeyPress);
+	var ac_next = document.getElementById('ac_next'),
+		ac_prev = document.getElementById('ac_prev');
+	var onMouseNextGO = function(evt){
+		if( counter ){
+			var e = window.event || evt;
+			playTrack();
+			e.preventDefault();
+			e.stopPropagation();
+			return false;
+		}
+	};
+	(ac_next&&ac_next.addEventListener('click',onMouseNextGO));
+	(ac_prev&&ac_prev.addEventListener('click',onMouseNextGO));
 	var clearSlot = function( id ){
 		slots[id].parentNode.removeChild(slots[id]);
 		delete slots[id];
@@ -29,6 +42,15 @@
 			orderSlot.push(id);
 		}
 	};
+	var playTrack = function(index){
+		var id = !index?orderSlot[0]:orderSlot[index];
+		var event = document.createEvent('Event'), 
+			elm = document.getElementById(id.replace('audio','play'));
+		event.initEvent('click', true, true);
+		elm.dispatchEvent(event);
+		clearSlot(id);
+		recalcSlots();
+	};
 	var old_length = 0;
 	setInterval(function(){
 		var list = document.getElementsByClassName('audio');
@@ -38,13 +60,7 @@
 				if( counter ){
 					var bar = parseFloat(document.getElementById('ac_pr_line').style.width);
 					if( bar>=99 ){
-						var id = orderSlot[0];
-						var event = document.createEvent('Event'), 
-							elm = document.getElementById(id.replace('audio','play'));
-						event.initEvent('click', true, true);
-						elm.dispatchEvent(event);
-						clearSlot(id);
-						recalcSlots();
+						playTrack();
 						timer = setTimeout(arguments.callee,1000);
 						return;
 					}
@@ -82,4 +98,4 @@
 			old_length = list.length;
 		}
 	},1000);
-}());
+})();
