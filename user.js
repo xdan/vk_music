@@ -1,3 +1,11 @@
+// ==UserScript==
+// @name xdsoft_vk_music
+// @description Script dlya uporyadochennogo proslushivaniya muziki http://xdan.ru/vk.html
+// @author Valeriy Chupurnov
+// @license MIT
+// @version 1.0
+// @include /^https?://vk\.com/audio.*$/
+// ==/UserScript==
 (function(){
 	var ctrlPressed = false, slots = {}, orderSlot = [];
 	
